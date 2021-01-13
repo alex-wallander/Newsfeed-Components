@@ -89,28 +89,72 @@ const data = [
   }
 ];
 
-/*
-  Step 1: Write a component called 'articleMaker' to create an article.
-  Your component is a function that takes an article object as its only argument,
-  and returns a DOM node looking like the one below:
 
-  <div class="article">
-    <h2>{title of the article}</h2>
-    <p class="date">{date of the article}</p>
+  // Step 1: Write a component called 'articleMaker' to create an article.
+  // Your component is a function that takes an article object as its only argument,
+  // and returns a DOM node looking like the one below:
 
-    {three separate paragraph elements}
+  // <div class="article">
+  //   <h2>{title of the article}</h2>
+  //   <p class="date">{date of the article}</p>
 
-    <span class="expandButton">+</span>
-  </div>
+  //   {three separate paragraph elements}
 
-  Step 2: Still inside `articleMaker`, add an event listener to the span.expandButton.
-  This listener should toggle the class 'article-open' on div.article.
+  //   <span class="expandButton">+</span>
+  // </div>
 
-  Step 3: Don't forget to return something from your function!
 
-  Step 4: Outside your function now, loop over the data. At each iteration you'll use your component
-  to create a div.article element and append it to the DOM inside div.articles (see index.html).
+  // Step 2: Still inside `articleMaker`, add an event listener to the span.expandButton.
+  // This listener should toggle the class 'article-open' on div.article.
 
-  Step 5: Try adding new article object to the data array. Make sure it is in the same format as the others.
-  Refresh the page to see the new article.
-*/
+  // Step 3: Don't forget to return something from your function!
+  
+
+  // Step 4: Outside your function now, loop over the data. At each iteration you'll use your component
+  // to create a div.article element and append it to the DOM inside div.articles (see index.html).
+
+  // Step 5: Try adding new article object to the data array. Make sure it is in the same format as the others.
+  // Refresh the page to see the new article.
+
+  function articleMaker(data) {
+    const divClass = document.createElement('div');
+    const head = document.createElement('h2');
+    const date = document.createElement('p');
+    const pOne = document.createElement('p');
+    const pTwo = document.createElement('p');
+    const pThree = document.createElement('p');
+    const expand = document.createElement('span');
+
+    divClass.classList.add('article');
+    date.classList.add('date');
+    expand.classList.add('expandButton');
+
+    divClass.appendChild(head);
+    divClass.appendChild(date);
+    divClass.appendChild(pOne);
+    divClass.appendChild(pTwo);
+    divClass.appendChild(pThree);
+    divClass.appendChild(expand);
+    
+    
+    head.textContent = data.title;
+    date.textContent = data.date;
+    pOne.textContent = data.firstParagraph;
+    pTwo.textContent = data.secondParagraph;
+    pThree.textContent = data.thirdParagraph;
+    expand.textContent = '+';
+
+    expand.addEventListener('click', () =>{
+      divClass.classList.toggle('article-open');
+    });
+    return divClass;
+  }
+
+  const articleData = data.map((articleItem) => {
+    return articleMaker(articleItem);
+  })
+  const target = document.querySelector('.articles');
+
+  articleData.forEach((item) =>{
+    target.appendChild(item)
+  });
